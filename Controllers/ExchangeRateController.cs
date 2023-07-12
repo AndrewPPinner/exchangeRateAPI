@@ -15,7 +15,7 @@ namespace ExchangeRateApi.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<double>> GetExchangeRate(string currencyCode, int amount) {
-            if (!_validCodes.Contains(currencyCode)) return BadRequest("Currency Code is not a valid ISO 4217 code");
+            if (!_validCodes.Contains(currencyCode) || amount == 0) return BadRequest("Currency Code is not a valid ISO 4217 code or amount is not valid");
             _timesCalled++;
 
             var information = string.Empty;
