@@ -27,10 +27,11 @@ namespace ExchangeRateApi.Controllers {
             foreach (var service in _services) {
                 try {
                     Type type = Type.GetType($"ExchangeRateApi.Services.{service}");
-                    Console.WriteLine(type.Name);
                     Object obj = Activator.CreateInstance(type);
                     MethodInfo methodInfo = type.GetMethod("GetUSD");
-                    Console.WriteLine(methodInfo.Name);
+                    if (methodInfo == null) {
+                        Console.WriteLine("failed");
+                    }
                     Task<double> resultMethod =  (Task<double>) methodInfo.Invoke(obj, new object[] {currencyCode, amount});
                     var result = await resultMethod;
 
@@ -44,7 +45,7 @@ namespace ExchangeRateApi.Controllers {
                     return result;
                 }
                 catch (Exception e) {
-                    information += $"{e.Message}\n";
+                    information += $"{e.Message} {e.InnerException} {e.StackTrace} \n";
                 }
             }
             return Problem(information);
