@@ -19,7 +19,7 @@ namespace ExchangeRateApi.Controllers {
             _timesCalled++;
 
             var information = string.Empty;
-            if (_cachedConversions.ContainsKey(currencyCode) && _cachedConversions.GetValueOrDefault(currencyCode).Time < DateTime.Now.AddHours(6)) {
+            if (_cachedConversions.ContainsKey(currencyCode) && _cachedConversions.GetValueOrDefault(currencyCode).Time.AddHours(6) > DateTime.Now) {
                 var convertedAmount = _cachedConversions.GetValueOrDefault(currencyCode).ExchangeRate * amount;
                 return convertedAmount;
             }
