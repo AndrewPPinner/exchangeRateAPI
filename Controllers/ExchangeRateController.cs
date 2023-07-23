@@ -53,6 +53,8 @@ namespace ExchangeRateApi.Controllers {
             return _timesCalled;
         }
 
+        //TODO: Add ability to convert to other codes other than usd
+
         private List<string> _validCodes = new List<string>() 
         {
            "AFN",
